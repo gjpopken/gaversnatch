@@ -52,3 +52,9 @@
     left: 25px;
     top: 100px;
 }
+
+.tips {
+    height: 200px;
+    width: 725px;
+    background-color: aquamarine;
+}
