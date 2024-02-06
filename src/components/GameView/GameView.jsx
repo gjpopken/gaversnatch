@@ -24,6 +24,8 @@ export const GameView = () => {
             '2.0': { description: "This is French room.", isOpen: 0 },
             '2.1': { description: "This is German room.", isOpen: 1 },
             '2.2': { description: "This is Swedish room.", isOpen: 1 },
+            '1.-1': { description: "This is first secret room.", isOpen: 1 },
+            '1.-2': { description: "This is the second secret room.", isOpen: 1 },
         },
     })
 
