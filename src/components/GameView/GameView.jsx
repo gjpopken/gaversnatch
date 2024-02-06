@@ -33,13 +33,8 @@ export const GameView = () => {
     const handleClick = (e, cbFunction) => {
         e.preventDefault()
         const move = cbFunction()
-        let newAdvText = [...saveObject.adventure_text, {creator: 'comp', content: move.room.description}]
-        // setSaveObject(save.saveCurrentRoom(move.history))
-        // console.log(save.saveCurrentRoom(move.history));
-        // setSaveObject(save.saveAdventureText(newAdvText))
         setSaveObject(save.saveForMove(move))
     }
-
 
     return (
         <div className='container'>
@@ -50,13 +45,14 @@ export const GameView = () => {
                 <div className="adventure-text"></div>
                 <div className="inventory"></div>
             </div>
-            <div className="tips">
-                <div className="inputs">
+            <div className="inputs">
                     <button className='n' onClick={(e) => {handleClick(e, moveUp)}}>Go North</button>
                     <button className='e' onClick={(e) => {handleClick(e, moveRight)}}>Go East</button>
                     <button className='s'onClick={(e) => {handleClick(e, moveDown)}}>Go South</button>
                     <button className='w' onClick={(e) => {handleClick(e, moveLeft)}}>Go West</button>
                 </div>
+            <div className="tips">
+
             </div>
         </div>
     )
