@@ -8,8 +8,8 @@ export const GameView = () => {
     const [saveObject, setSaveObject] = useState({
         // ! This is for rerendering past actions to the DOM.
         adventure_text: [
-            { creator: 'user' | 'comp', content: 'Move left' },
-            { creator: 'user' | 'comp', content: 'You\'ve entered a room with tall windows. In the corner there is a Taffany lamp.' },
+            { creator: 'user', content: 'Move left' },
+            { creator: 'comp', content: 'You\'ve entered a room with tall windows. In the corner there is a Taffany lamp.' },
         ],
         // ! This is for knowing the player's last location.
         current_room: ['1.1', '1.2'],
@@ -42,7 +42,14 @@ export const GameView = () => {
             <p>{JSON.stringify(saveObject.adventure_text)}</p>
             <p>{JSON.stringify(saveObject.current_room)}</p>
             <div className='row'>
-                <div className="adventure-text"></div>
+                <div className="adventure-text">
+                    {saveObject.adventure_text.map((element, i) => {
+                        if (element.creator === 'comp') {
+                            return <p key={i}>{element.content}</p>
+                        }
+                        return <p key={i} className='user'>{element.content}</p>
+                    })}
+                </div>
                 <div className="inventory"></div>
             </div>
             <div className="inputs">

@@ -37,7 +37,7 @@ export const doSave = (saveObject) => {
         return { ...saveObject, adventure_text: adventure_text }
     }
     const saveForMove = (moveObj) => {
-        return {...saveObject, adventure_text: [...saveObject.adventure_text, moveObj.room.description], current_room: moveObj.history}
+        return {...saveObject, adventure_text: [...saveObject.adventure_text, {creator: 'comp', content: moveObj.room.description}], current_room: moveObj.history}
     }
     const saveAll = (rooms, history, adventure_text) => {
         return { adventure_text: adventure_text, current_room: rooms, rooms_state: history }
