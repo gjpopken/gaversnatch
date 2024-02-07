@@ -38,4 +38,34 @@ router.post('/', (req, res) => {
     })
 });
 
+router.delete('/:storyId', rejectUnauthenticated, (req, res) => {
+    let queryText = `
+    SELECT "user".id FROM "user"
+    JOIN story ON story.user_id = "user".id
+    WHERE story.id = $1;
+    `
+    pool.query(queryText, [req.params.storyId])
+    .then(result => {
+        if (result.rows[0].id === req.user.id) {
+            console.log("This is allowed");
+            queryText = `
+            DELETE FROM "story"
+            WHERE id = $1
+            `
+            pool.query(queryText, [req.params.storyId])
+            .then(result => {
+                res.sendStatus(201)
+            }).catch(err => {
+                console.log(err);
+                res.sendStatus(500)
+            })
+        } else {
+            res.sendStatus(403)
+        }
+    }).catch(err => {
+        console.log(err);
+        res.sendStatus(500)
+    })
+})
+
 module.exports = router;
