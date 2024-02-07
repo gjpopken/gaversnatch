@@ -25,7 +25,17 @@ router.get('/', rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post('/', (req, res) => {
-    // POST route code here
+    const queryText = `
+    INSERT INTO "story" ("story_name", "user_id")
+    VALUES
+    ($1, $2)
+    `
+    pool.query(queryText, [req.body.story_name, req.user.id])
+    .then(result => {
+        res.sendStatus(201)
+    }).catch(err => {
+        console.log(err);
+    })
 });
 
 module.exports = router;
