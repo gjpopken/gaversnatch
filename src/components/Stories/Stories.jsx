@@ -9,6 +9,7 @@ export const Stories = () => {
     const dispatch = useDispatch()
     const [stories, setStories] = useState([])
     const [visible, setVisible] = useState(false)
+    const [nameInput, setNameInput] = useState('')
 
     useEffect(() => {
         axios.get('/api/stories')
@@ -19,12 +20,27 @@ export const Stories = () => {
             })
     }, [])
 
-    const footerContent = (
-        <div>
-            <Button label="Start Game!" onClick={() => setVisible(false)} className="p-button-text" />
-            <Button label="Cancel" onClick={() => setVisible(false)} autoFocus />
-        </div>
-    );
+    const handleSubmit = () => {
+        setVisible(false)
+    }
+
+    const footerContent = () => {
+        if (nameInput === '') {
+            return (
+                <div>
+                    <Button disabled label="Start Game!" onClick={() => handleSubmit()} className="p-button-text" />
+                    <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
+                </div>
+            );
+        }
+        return (
+            <div>
+                <Button label="Start Game!" onClick={() => setVisible(false)} className="p-button-text" />
+                <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
+            </div>
+        );
+    }
+
 
     if (stories[0]) {
         return (
@@ -52,11 +68,17 @@ export const Stories = () => {
                 <div>
                     <button>Load Game</button>
                     {/* <button>New Game</button> */}
-                    <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+                    <Button label="Create New Game" onClick={() => setVisible(true)} />
                     <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                         <p className="m-0">
                             <label htmlFor="nameInput">Enter New Story Name</label>
-                            <input type="text" id="nameInput"/>
+                            <input
+                                type="text"
+                                id="nameInput"
+                                placeholder="Enter New Story Name"
+                                onChange={(e) => setNameInput(e.target.value)}
+                                value={nameInput}
+                            />
                         </p>
                     </Dialog>
                 </div>
