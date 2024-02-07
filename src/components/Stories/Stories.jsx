@@ -9,9 +9,10 @@ export const Stories = () => {
     const dispatch = useDispatch()
     const [stories, setStories] = useState([])
     const [visible, setVisible] = useState(false)
+    const [delVisible, setDelVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
 
-    const handleSubmit = (id) => {
+    const handleSubmit = () => {
         console.log('in handle submit');
         setVisible(false)
         axios.post('/api/stories', { story_name: nameInput })
@@ -19,6 +20,15 @@ export const Stories = () => {
                 console.log('POSTed!');
                 getStories()
                 setNameInput('')
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
+    const handleDelete = (id) => {
+        axios.delete(`/api/stories/${id}`)
+            .then(response => {
+                getStories()
             }).catch(err => {
                 console.log(err);
             })
@@ -54,6 +64,13 @@ export const Stories = () => {
         );
     }
 
+    const delFooter = (
+        <div>
+            <Button label="Delete" className="p-button-text" onClick={() => { setDelVisible(false) }} />
+            <Button label="I Changed My Mind" onClick={() => { setDelVisible(false) }} autoFocus />
+        </div>
+    )
+
 
     if (stories[0]) {
         return (
@@ -72,12 +89,17 @@ export const Stories = () => {
                                 <tr key={element.id}>
                                     <td>{element.story_name}</td>
                                     <td></td>
-                                    <td><button>Delete</button></td>
+                                    <td><button onClick={() => setDelVisible(true)}>Delete</button></td>
                                 </tr>
                             )
                         })}
                     </tbody>
                 </table>
+                <Dialog header="Are you sure you want to delete this story?" footer={delFooter} visible={delVisible} style={{ width: '50vw' }} onHide={() => setDelVisible(false)}>
+                    <p className="m-0">
+                        Deleting a story cannot be undone.
+                    </p>
+                </Dialog>
                 <div>
                     <button>Load Game</button>
                     {/* <button>New Game</button> */}
