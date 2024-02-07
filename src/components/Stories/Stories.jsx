@@ -11,31 +11,44 @@ export const Stories = () => {
     const [visible, setVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
 
-    useEffect(() => {
+    const handleSubmit = (id) => {
+        console.log('in handle submit');
+        setVisible(false)
+        axios.post('/api/stories', { story_name: nameInput })
+            .then(response => {
+                console.log('POSTed!');
+                getStories()
+                setNameInput('')
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
+    const getStories = () => {
         axios.get('/api/stories')
             .then(response => {
                 setStories(response.data)
             }).catch(err => {
                 console.log(err);
             })
-    }, [])
-
-    const handleSubmit = () => {
-        setVisible(false)
     }
+
+    useEffect(() => {
+        getStories()
+    }, [])
 
     const footerContent = () => {
         if (nameInput === '') {
             return (
                 <div>
-                    <Button disabled label="Start Game!" onClick={() => handleSubmit()} className="p-button-text" />
+                    <Button disabled label="Start Game!" className="p-button-text" />
                     <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
                 </div>
             );
         }
         return (
             <div>
-                <Button label="Start Game!" onClick={() => setVisible(false)} className="p-button-text" />
+                <Button label="Start Game!" onClick={() => handleSubmit()} className="p-button-text" />
                 <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
             </div>
         );
