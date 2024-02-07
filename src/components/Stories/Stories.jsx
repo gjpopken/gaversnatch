@@ -1,10 +1,14 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 
 export const Stories = () => {
     const dispatch = useDispatch()
     const [stories, setStories] = useState([])
+    const [visible, setVisible] = useState(false)
 
     useEffect(() => {
         axios.get('/api/stories')
@@ -14,36 +18,51 @@ export const Stories = () => {
                 console.log(err);
             })
     }, [])
+
+    const footerContent = (
+        <div>
+            <Button label="Start Game!" onClick={() => setVisible(false)} className="p-button-text" />
+            <Button label="Cancel" onClick={() => setVisible(false)} autoFocus />
+        </div>
+    );
+
     if (stories[0]) {
         return (
             <div>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Story Name</td>
-                        <td>Date Created</td>
-                        <td>Delete?</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {stories.map(element => {
-                        return (
-                            <tr key={element.id}>
-                                <td>{element.story_name}</td>
-                                <td></td>
-                                <td><button>Delete</button></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <div>
-                <button>Load Game</button>
-                <button>New Game</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Story Name</td>
+                            <td>Date Created</td>
+                            <td>Delete?</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stories.map(element => {
+                            return (
+                                <tr key={element.id}>
+                                    <td>{element.story_name}</td>
+                                    <td></td>
+                                    <td><button>Delete</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                <div>
+                    <button>Load Game</button>
+                    {/* <button>New Game</button> */}
+                    <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+                    <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                        <p className="m-0">
+                            <label htmlFor="nameInput">Enter New Story Name</label>
+                            <input type="text" id="nameInput"/>
+                        </p>
+                    </Dialog>
+                </div>
             </div>
-        </div>
         )
-    } 
+    }
     return (
         <div>
             <table>

@@ -6,12 +6,18 @@ import store from './redux/store';
 
 import App from './components/App/App';
 
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+        
+
 
 const root = ReactDOM.createRoot(document.getElementById('react-root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <PrimeReactProvider>
+       <Provider store={store}>
       <App />
     </Provider>
+    </PrimeReactProvider>
+   
   </React.StrictMode>
 );
