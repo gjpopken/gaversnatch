@@ -64,7 +64,7 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/play"
+            path="/play/:storyId"
           >
             <GameView />
           </ProtectedRoute>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js'
 
 import './GameView.css'
 import { configMove } from '../../engine/engine.js'
@@ -8,6 +9,7 @@ import { doSave } from '../../engine/doSave.js'
 
 export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
+    const { storyId } = useParams()
     // const [saveObject, setSaveObject] = useState({
     //     // ! This is for rerendering past actions to the DOM.
     //     adventure_text: [
@@ -33,6 +35,7 @@ export const GameView = () => {
     // })
     const dispatch = useDispatch()
     useEffect(() => {
+        console.log(storyId);
         dispatch({ type: "GET_SAVEOBJ", payload: 2 })
     }, [dispatch])
 
@@ -44,7 +47,7 @@ export const GameView = () => {
         e.preventDefault()
         const move = cbFunction()
         // setSaveObject(save.saveForMove(move))
-        dispatch({ type: "UPDATE_SAVE", payload: {move: save.saveForMove(move), storyId: 2} })
+        dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: 2 } })
     }
 
     return (

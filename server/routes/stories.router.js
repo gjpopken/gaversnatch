@@ -29,10 +29,12 @@ router.post('/', (req, res) => {
     INSERT INTO "story" ("story_name", "user_id")
     VALUES
     ($1, $2)
+    RETURNING id;
     `
     pool.query(queryText, [req.body.story_name, req.user.id])
     .then(result => {
-        res.sendStatus(201)
+        console.log(result);
+        res.send(result.rows[0])
     }).catch(err => {
         console.log(err);
     })

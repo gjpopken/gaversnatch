@@ -1,13 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { DeleteModal } from "../DeleteModal/DeleteModal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export const Stories = () => {
-    const dispatch = useDispatch()
+    const history = useHistory()
     const [stories, setStories] = useState([])
     const [visible, setVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
@@ -17,12 +17,18 @@ export const Stories = () => {
         setVisible(false)
         axios.post('/api/stories', { story_name: nameInput })
             .then(response => {
-                console.log('POSTed!');
-                getStories()
+                console.log('POSTed!', response.data.id);
+                // getStories()
                 setNameInput('')
+                postNewStory(response.data.id)
+                history.push(`/play/${response.data.id}`)
             }).catch(err => {
                 console.log(err);
             })
+    }
+
+    const postNewStory = (storyId) => {
+        console.log('in post new story');
     }
 
 

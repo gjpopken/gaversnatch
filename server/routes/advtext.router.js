@@ -44,8 +44,34 @@ router.get('/:storyId', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-    // POST route code here
+router.post('/:storyId', (req, res) => {
+    let queryText = `
+    SELECT "user".id FROM "user"
+    JOIN story ON story.user_id = "user".id
+    WHERE story.id = $1;
+    `
+    pool.query(queryText, [req.params.storyId])
+        .then(result => {
+            if (result.rows[0].id === req.user.id) {
+                queryText = `
+                INSERT INTO "baseMode_adventures" ("story_id", "history")
+                VALUES ($1, $2);
+                `
+                console.log(queryText);
+                pool.query(queryText, [req.params.storyId, JSON.stringify(req.body)])
+                    .then(result => {
+                        res.sendStatus(201)
+                    }).catch(err => {
+                        console.log(err);
+                        res.sendStatus(500)
+                    })
+            } else {
+                res.sendStatus(403)
+            }
+        }).catch(err => {
+            console.log(err);
+            res.sendStatus(500)
+        })
 });
 
 router.put('/:storyId', rejectUnauthenticated, (req, res) => {
