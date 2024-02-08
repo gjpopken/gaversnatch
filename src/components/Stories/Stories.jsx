@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { DeleteModal } from "../DeleteModal/DeleteModal";
 
 export const Stories = () => {
     const dispatch = useDispatch()
     const [stories, setStories] = useState([])
     const [visible, setVisible] = useState(false)
-    const [delVisible, setDelVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
 
     const handleSubmit = () => {
@@ -25,14 +25,7 @@ export const Stories = () => {
             })
     }
 
-    const handleDelete = (id) => {
-        axios.delete(`/api/stories/${id}`)
-            .then(response => {
-                getStories()
-            }).catch(err => {
-                console.log(err);
-            })
-    }
+
 
     const getStories = () => {
         axios.get('/api/stories')
@@ -64,14 +57,6 @@ export const Stories = () => {
         );
     }
 
-    const delFooter = (
-        <div>
-            <Button label="Delete" className="p-button-text" onClick={() => { setDelVisible(false) }} />
-            <Button label="I Changed My Mind" onClick={() => { setDelVisible(false) }} autoFocus />
-        </div>
-    )
-
-
     if (stories[0]) {
         return (
             <div>
@@ -86,20 +71,19 @@ export const Stories = () => {
                     <tbody>
                         {stories.map(element => {
                             return (
-                                <tr key={element.id}>
-                                    <td>{element.story_name}</td>
-                                    <td></td>
-                                    <td><button onClick={() => setDelVisible(true)}>Delete</button></td>
-                                </tr>
+                                    <tr key={element.id}>
+                                        <td>{element.story_name}</td>
+                                        <td></td>
+                                         {/* //! The title of this component is a misnomer, this the delete button WITH attached modal nested in a <td></td> */}
+                                        <DeleteModal id={element.id} getStories={getStories}/> 
+                                    </tr>
+                                    
+
                             )
                         })}
                     </tbody>
+
                 </table>
-                <Dialog header="Are you sure you want to delete this story?" footer={delFooter} visible={delVisible} style={{ width: '50vw' }} onHide={() => setDelVisible(false)}>
-                    <p className="m-0">
-                        Deleting a story cannot be undone.
-                    </p>
-                </Dialog>
                 <div>
                     <button>Load Game</button>
                     {/* <button>New Game</button> */}
