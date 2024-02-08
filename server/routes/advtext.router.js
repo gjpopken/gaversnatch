@@ -86,7 +86,7 @@ router.put('/:storyId', rejectUnauthenticated, (req, res) => {
         .then(result => {
             if (result.rows[0].id === req.user.id) {
                 queryText = `
-                UPDATE "baseMode_adventures" SET "history" = '$1'
+                UPDATE "baseMode_adventures" SET "history" = $1
             WHERE story_id = $2;
                 `
                 console.log(queryText);

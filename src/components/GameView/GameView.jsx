@@ -35,8 +35,8 @@ export const GameView = () => {
     // })
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log(storyId);
-        dispatch({ type: "GET_SAVEOBJ", payload: 2 })
+        // console.log(storyId);
+        dispatch({ type: "GET_SAVEOBJ", payload: storyId })
     }, [dispatch])
 
 
@@ -47,7 +47,7 @@ export const GameView = () => {
         e.preventDefault()
         const move = cbFunction()
         // setSaveObject(save.saveForMove(move))
-        dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: 2 } })
+        dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: storyId } })
     }
 
     return (
