@@ -63,7 +63,10 @@ export const Stories = () => {
         axios.get('/api/stories')
             .then(response => {
                 setStories(response.data)
-                setLoadStoryId(response.data[0].id)
+                if (response.data[0]) {
+                    setLoadStoryId(response.data[0].id)
+                }
+
             }).catch(err => {
                 console.log(err);
             })
@@ -72,6 +75,10 @@ export const Stories = () => {
     useEffect(() => {
         getStories()
     }, [])
+
+    const handleLoadStory = () => {
+        history.push(`/play/${loadStoryId}`)
+    }
 
     const footerContent = () => {
         if (nameInput === '') {
@@ -119,15 +126,13 @@ export const Stories = () => {
                                     {/* //! The title of this component is a misnomer, this the delete button WITH attached modal nested in a <td></td> */}
                                     <DeleteModal id={element.id} getStories={getStories} />
                                 </tr>
-
-
                             )
                         })}
                     </tbody>
 
                 </table>
                 <div>
-                    <button>Load Game</button>
+                    <Button label="Load Story" onClick={handleLoadStory} />
                     {/* <button>New Game</button> */}
                     <Button label="Create New Game" onClick={() => setVisible(true)} />
                     <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
