@@ -152,7 +152,19 @@ export const Stories = () => {
             </table>
             <div>
                 <button disabled >Load Game</button>
-                <button>New Game</button>
+                <Button label="Create New Game" onClick={() => setVisible(true)} />
+                    <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                        <p className="m-0">
+                            <label htmlFor="nameInput">Enter New Story Name</label>
+                            <input
+                                type="text"
+                                id="nameInput"
+                                placeholder="Enter New Story Name"
+                                onChange={(e) => setNameInput(e.target.value)}
+                                value={nameInput}
+                            />
+                        </p>
+                    </Dialog>
             </div>
         </div>
     )
