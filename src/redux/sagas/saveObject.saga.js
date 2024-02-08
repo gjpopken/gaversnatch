@@ -16,6 +16,7 @@ function* getSaveObj(action) {
         yield put({ type: "SET_SAVEOBJ", payload: saveObj.data.history })
     } catch (error) {
         console.log(error);
+        yield put({type: "SET_SAVEOBJ", payload: {adventure_text: [{creator: "comp", content:"You're not supposed to be here."}]}})
     }
 }
 

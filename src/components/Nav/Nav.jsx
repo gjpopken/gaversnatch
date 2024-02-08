@@ -28,7 +28,7 @@ function Nav() {
               Home
             </Link>
 
-            <Link className='navLink' to='/play'>Play</Link>
+            <Link className='navLink' to='/stories'>Stories</Link>
 
             <Link className="navLink" to="/info">
               Info Page

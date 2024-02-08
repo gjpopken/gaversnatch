@@ -2,8 +2,7 @@ const saveObject = (state =
     {
         // ! This is for rerendering past actions to the DOM.
         adventure_text: [
-            { creator: 'user', content: 'Move left' },
-            { creator: 'comp', content: "You have entered a room with tall windows. In the corner there is a Taffany lamp." },
+            { creator: 'comp', content: "You are not supposed to be here" },
         ],
         // ! This is for knowing the player's last location.
         current_room: ['1.1', '1.2'],
