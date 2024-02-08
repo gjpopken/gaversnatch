@@ -60,11 +60,11 @@ router.put('/:storyId', rejectUnauthenticated, (req, res) => {
         .then(result => {
             if (result.rows[0].id === req.user.id) {
                 queryText = `
-                UPDATE "baseMode_adventures" SET "history" = '${JSON.stringify(req.body)}'
-            WHERE story_id = $1;
+                UPDATE "baseMode_adventures" SET "history" = '$1'
+            WHERE story_id = $2;
                 `
                 console.log(queryText);
-                pool.query(queryText, [req.params.storyId])
+                pool.query(queryText, [JSON.stringify(req.body), req.params.storyId])
                     .then(result => {
                         res.sendStatus(201)
                     }).catch(err => {

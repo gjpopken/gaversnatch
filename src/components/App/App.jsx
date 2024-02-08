@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import { GameView } from '../GameView/GameView';
+import { Stories } from '../Stories/Stories';
 
 import './App.css';
 
@@ -66,6 +67,13 @@ function App() {
             path="/play"
           >
             <GameView />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/stories"
+          >
+            <Stories />
           </ProtectedRoute>
 
           <ProtectedRoute
