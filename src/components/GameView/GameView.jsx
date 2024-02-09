@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Header } from '../Header/Header.jsx'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min.js'
+import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min.js'
 
 import './GameView.css'
 import { configMove } from '../../engine/engine.js'
@@ -10,6 +11,7 @@ import { doSave } from '../../engine/doSave.js'
 export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
     const { storyId } = useParams()
+    const history = useHistory()
     // const [saveObject, setSaveObject] = useState({
     //     // ! This is for rerendering past actions to the DOM.
     //     adventure_text: [
@@ -53,6 +55,7 @@ export const GameView = () => {
     return (
         <div className='container'>
             <h2>GAVERSNATCH</h2>
+            <Header options={[{label:'All Stories', command: () => history.push('/stories')}]} />
             <p>{JSON.stringify(saveObject.adventure_text)}</p>
             <p>{JSON.stringify(saveObject.current_room)}</p>
             <div className='row'>
