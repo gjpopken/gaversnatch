@@ -18,6 +18,7 @@ export const Header = ({ options }) => {
         {
             label: 'Menu',
             items: [...options,
+                {label: 'Create Story', command: () => {setVisible(true)}},
             {
                 label: 'Logout',
                 command: () => dispatch({ type: "LOGOUT" })
