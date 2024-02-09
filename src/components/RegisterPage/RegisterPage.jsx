@@ -7,7 +7,10 @@ function RegisterPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div className='container'>
+      <h2>Welcome to the World of</h2>
+      <h1>GAVERSNATCH</h1>
+      <button onClick={() => history.push('/home')}>{`<`}</button>
       <RegisterForm />
 
       <center>
