@@ -155,6 +155,7 @@ export const Stories = () => {
     }
     return (
         <div>
+            <Header options={[]}/>
             <table>
                 <thead>
                     <tr>
