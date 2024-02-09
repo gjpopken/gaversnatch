@@ -1,4 +1,5 @@
 import axios from "axios"
+import { Header } from "../Header/Header";
 import { useEffect, useState } from "react"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Button } from 'primereact/button';
@@ -101,7 +102,7 @@ export const Stories = () => {
     if (stories[0]) {
         return (
             <div>
-                <p>{loadStoryId}</p>
+                <Header />
                 <table>
                     <thead>
                         <tr>
