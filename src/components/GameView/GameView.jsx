@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Header } from '../Header/Header.jsx'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min.js'
 
 import { Panel } from 'primereact/panel';
+import { Dropdown } from 'primereact/dropdown';
+import { Button } from 'primereact/button'
 
 import './GameView.css'
 import { configMove } from '../../engine/engine.js'
@@ -14,30 +16,9 @@ export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
     const { storyId } = useParams()
     const history = useHistory()
-    // const [saveObject, setSaveObject] = useState({
-    //     // ! This is for rerendering past actions to the DOM.
-    //     adventure_text: [
-    //         { creator: 'user', content: 'Move left' },
-    //         { creator: 'comp', content: 'You\'ve entered a room with tall windows. In the corner there is a Taffany lamp.' },
-    //     ],
-    //     // ! This is for knowing the player's last location.
-    //     current_room: ['1.1', '1.2'],
-    //     // ! This is the state of the rooms at the end of the last save. Updates when changes to state are made. 
-    //     rooms_state: {
-    //         '0.0': { description: "This is red room.", isOpen: 1, items: [1, 5, 7] },
-    //         '0.1': { description: "This is green room.", isOpen: 0 },
-    //         '0.2': { description: "This is blue room.", isOpen: 1 },
-    //         '1.0': { description: "This is horse room.", isOpen: 1 },
-    //         '1.1': { description: "This is cow room.", isOpen: 1 },
-    //         '1.2': { description: "This is cat room.", isOpen: 1 },
-    //         '2.0': { description: "This is French room.", isOpen: 0 },
-    //         '2.1': { description: "This is German room.", isOpen: 1 },
-    //         '2.2': { description: "This is Swedish room.", isOpen: 1 },
-    //         '1.-1': { description: "This is first secret room.", isOpen: 1 },
-    //         '1.-2': { description: "This is the second secret room.", isOpen: 1 },
-    //     },
-    // })
     const dispatch = useDispatch()
+    const [command, setCommand] = useState(null)
+
     useEffect(() => {
         // console.log(storyId);
         dispatch({ type: "GET_SAVEOBJ", payload: storyId })
@@ -47,24 +28,37 @@ export const GameView = () => {
     const save = doSave(saveObject)
     const { moveDown, moveLeft, moveRight, moveUp } = configMove({ rooms: saveObject.rooms_state, history: saveObject.current_room })
 
-    const handleClick = (e, cbFunction) => {
-        e.preventDefault()
-        const move = cbFunction()
-        // setSaveObject(save.saveForMove(move))
-        dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: storyId } })
+    const handleClick = (option) => {
+        if (option) {
+            let move;
+
+            switch (option.dir) {
+                case 'n': move = moveUp()
+                    break
+                case 's': move = moveDown()
+                    break
+                case 'e': move = moveRight()
+                    break
+                case 'w': move = moveLeft()
+                    break
+            }
+            dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: storyId } })
+            setCommand(null)
+        }
     }
+
+    const options = [
+        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'e' }
+    ]
 
     return (
 
         <div className='container'>
             <Header options={[{ label: 'All Stories', command: () => history.push('/stories') }]} />
-
-            {/* <p>{JSON.stringify(saveObject.adventure_text)}</p>
-            <p>{JSON.stringify(saveObject.current_room)}</p> */}
             <div className='row'>
                 <Panel header='Story Title' style={{ margin: '10px' }}>
                     <div className="adventure-text">
-                        {saveObject.adventure_text.map((element, i) => {
+                        {saveObject.adventure_text.map((element, i, a) => {
                             if (element.creator === 'comp') {
                                 return <p key={i}>{element.content}</p>
                             }
@@ -72,17 +66,19 @@ export const GameView = () => {
                         })}
                     </div>
                 </Panel>
-                
-                <Panel header='Inventory' style={{margin: '10px'}}><div className="inventory"></div></Panel>
+
+                <Panel header='Inventory' style={{ margin: '10px' }}><div className="inventory"></div></Panel>
             </div>
             <div className="inputs">
-                <button className='n' onClick={(e) => { handleClick(e, moveUp) }}>Go North</button>
-                <button className='e' onClick={(e) => { handleClick(e, moveRight) }}>Go East</button>
-                <button className='s' onClick={(e) => { handleClick(e, moveDown) }}>Go South</button>
-                <button className='w' onClick={(e) => { handleClick(e, moveLeft) }}>Go West</button>
-            </div>
-            <div className="tips">
-
+                <Dropdown
+                    value={command}
+                    placeholder='What will you do?'
+                    options={options}
+                    optionLabel='name'
+                    className="w-full md:w-14rem"
+                    onChange={e => setCommand(e.target.value)}
+                    style={{ marginRight: "20px" }} />
+                <Button label='GO' onClick={() => handleClick(command)} />
             </div>
         </div>
     )

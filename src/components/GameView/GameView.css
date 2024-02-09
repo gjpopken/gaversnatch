@@ -24,38 +24,6 @@
     /* border: 1px solid black; */
 }
 
-.inputs {
-    /* border: 1px solid black; */
-    width: 250px;
-    height: 250px;
-    position: relative;
-    border-radius: 25%;
-    background-color: pink;
-}
-
 .inputs button {
     position: absolute;
-}
-
-.n {
-    top: 25px;
-    left: 100px;
-}
-.e {
-    right: 25px;
-    top: 100px;
-}
-.s {
-    bottom: 25px;
-    left: 100px;
-}
-.w {
-    left: 25px;
-    top: 100px;
-}
-
-.tips {
-    height: 200px;
-    width: 725px;
-    background-color: aquamarine;
 }
