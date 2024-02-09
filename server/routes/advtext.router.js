@@ -75,7 +75,7 @@ router.post('/:storyId', (req, res) => {
 });
 
 router.put('/:storyId', rejectUnauthenticated, (req, res) => {
-    console.log(req.user);
+    // console.log(req.user);
     let queryText = `
     SELECT "user".id FROM "user"
     JOIN story ON story.user_id = "user".id
@@ -89,7 +89,7 @@ router.put('/:storyId', rejectUnauthenticated, (req, res) => {
                 UPDATE "baseMode_adventures" SET "history" = $1
             WHERE story_id = $2;
                 `
-                console.log(queryText);
+                // console.log(queryText);
                 pool.query(queryText, [JSON.stringify(req.body), req.params.storyId])
                     .then(result => {
                         res.sendStatus(201)

@@ -41,33 +41,6 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:storyId', rejectUnauthenticated, async (req, res) => {
-    // let queryText = `
-    // SELECT "user".id FROM "user"
-    // JOIN story ON story.user_id = "user".id
-    // WHERE story.id = $1;
-    // `
-    // pool.query(queryText, [req.params.storyId])
-    // .then(result => {
-    //     if (result.rows[0].id === req.user.id) {
-    //         console.log("This is allowed");
-    //         queryText = `
-    //         DELETE FROM "story"
-    //         WHERE id = $1
-    //         `
-    //         pool.query(queryText, [req.params.storyId])
-    //         .then(result => {
-    //             res.sendStatus(201)
-    //         }).catch(err => {
-    //             console.log(err);
-    //             res.sendStatus(500)
-    //         })
-    //     } else {
-    //         res.sendStatus(403)
-    //     }
-    // }).catch(err => {
-    //     console.log(err);
-    //     res.sendStatus(500)
-    // })
     const connection = await pool.connect()
     try {
         await connection.query('BEGIN')
@@ -77,8 +50,9 @@ router.delete('/:storyId', rejectUnauthenticated, async (req, res) => {
         WHERE story.id = $1;
         `
         const result = await connection.query(queryText, [req.params.storyId])
-        // console.log(result.rows);
+        console.log(result.rows);
         if (result.rows[0].id === req.user.id) {
+            console.log('This is allowed');
             queryText = `
             DELETE FROM "baseMode_adventures"
             WHERE story_id = $1;
@@ -90,11 +64,14 @@ router.delete('/:storyId', rejectUnauthenticated, async (req, res) => {
             `
             await connection.query(queryText, [req.params.storyId])
             await connection.query("COMMIT")
+            res.sendStatus(201)
         } else {
             res.sendStatus(403)
         }
     } catch (error) {
-
+        await connection.query('ROLLBACK')
+        console.log(error);
+        res.sendStatus(500)
     } finally {
         connection.release()
     }
