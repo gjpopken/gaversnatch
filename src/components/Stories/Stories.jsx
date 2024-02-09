@@ -117,7 +117,8 @@ export const Stories = () => {
                                     {/* <td>{element.story_name}</td> */}
                                     <td>
                                         <div className="flex align-items-center">
-                                            <RadioButton inputId={`story_name${element.id}`} value={element.id} name={element.id} onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId === element.id} />
+                                            {/* <RadioButton inputId={`story_name${element.id}`} value={element.id} name='stories' onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id} /> */}
+                                            <input type="radio" id={`story_name${element.id}`} value={element.id}  onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id}></input>
                                             <label htmlFor={`story_name${element.id}`} className="ml-2">{element.story_name}</label>
                                         </div>
 
