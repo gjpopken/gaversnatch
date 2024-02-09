@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
+import { RadioButton } from "primereact/radiobutton";
 import { DeleteModal } from "../DeleteModal/DeleteModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -11,6 +12,7 @@ export const Stories = () => {
     const [stories, setStories] = useState([])
     const [visible, setVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
+    const [loadStoryId, setLoadStoryId] = useState('')
 
     const handleSubmit = () => {
         console.log('in handle submit');
@@ -61,6 +63,10 @@ export const Stories = () => {
         axios.get('/api/stories')
             .then(response => {
                 setStories(response.data)
+                if (response.data[0]) {
+                    setLoadStoryId(response.data[0].id)
+                }
+
             }).catch(err => {
                 console.log(err);
             })
@@ -69,6 +75,10 @@ export const Stories = () => {
     useEffect(() => {
         getStories()
     }, [])
+
+    const handleLoadStory = () => {
+        history.push(`/play/${loadStoryId}`)
+    }
 
     const footerContent = () => {
         if (nameInput === '') {
@@ -87,9 +97,11 @@ export const Stories = () => {
         );
     }
 
+    // console.log(stories[0]);
     if (stories[0]) {
         return (
             <div>
+                <p>{loadStoryId}</p>
                 <table>
                     <thead>
                         <tr>
@@ -101,21 +113,27 @@ export const Stories = () => {
                     <tbody>
                         {stories.map(element => {
                             return (
-                                    <tr key={element.id}>
-                                        <td>{element.story_name}</td>
-                                        <td></td>
-                                         {/* //! The title of this component is a misnomer, this the delete button WITH attached modal nested in a <td></td> */}
-                                        <DeleteModal id={element.id} getStories={getStories}/> 
-                                    </tr>
-                                    
+                                <tr key={element.id}>
+                                    {/* <td>{element.story_name}</td> */}
+                                    <td>
+                                        <div className="flex align-items-center">
+                                            {/* <RadioButton inputId={`story_name${element.id}`} value={element.id} name='stories' onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id} /> */}
+                                            <input type="radio" id={`story_name${element.id}`} value={element.id}  onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id}></input>
+                                            <label htmlFor={`story_name${element.id}`} className="ml-2">{element.story_name}</label>
+                                        </div>
 
+                                    </td>
+                                    <td></td>
+                                    {/* //! The title of this component is a misnomer, this the delete button WITH attached modal nested in a <td></td> */}
+                                    <DeleteModal id={element.id} getStories={getStories} />
+                                </tr>
                             )
                         })}
                     </tbody>
 
                 </table>
                 <div>
-                    <button>Load Game</button>
+                    <Button label="Load Story" onClick={handleLoadStory} />
                     {/* <button>New Game</button> */}
                     <Button label="Create New Game" onClick={() => setVisible(true)} />
                     <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
@@ -153,18 +171,18 @@ export const Stories = () => {
             <div>
                 <button disabled >Load Game</button>
                 <Button label="Create New Game" onClick={() => setVisible(true)} />
-                    <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
-                        <p className="m-0">
-                            <label htmlFor="nameInput">Enter New Story Name</label>
-                            <input
-                                type="text"
-                                id="nameInput"
-                                placeholder="Enter New Story Name"
-                                onChange={(e) => setNameInput(e.target.value)}
-                                value={nameInput}
-                            />
-                        </p>
-                    </Dialog>
+                <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+                    <p className="m-0">
+                        <label htmlFor="nameInput">Enter New Story Name</label>
+                        <input
+                            type="text"
+                            id="nameInput"
+                            placeholder="Enter New Story Name"
+                            onChange={(e) => setNameInput(e.target.value)}
+                            value={nameInput}
+                        />
+                    </p>
+                </Dialog>
             </div>
         </div>
     )
