@@ -12,15 +12,16 @@
 .adventure-text {
     width: 500px;
     height: 450px;
-    background-color: antiquewhite;
-    border: 1px solid black;
+    /* background-color: antiquewhite; */
+    /* border: 1px solid black; */
+    overflow: scroll;
 }
 
 .inventory {
     width: 200px;
     height: 450px;
-    background-color: rgb(199, 192, 182);
-    border: 1px solid black;
+    /* background-color: rgb(199, 192, 182); */
+    /* border: 1px solid black; */
 }
 
 .inputs {

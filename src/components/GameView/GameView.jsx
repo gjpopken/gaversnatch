@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom/cjs/react-router-dom.min.js'
 
+import { Panel } from 'primereact/panel';
+
 import './GameView.css'
 import { configMove } from '../../engine/engine.js'
 import { doSave } from '../../engine/doSave.js'
@@ -53,21 +55,25 @@ export const GameView = () => {
     }
 
     return (
+
         <div className='container'>
-            <h2>GAVERSNATCH</h2>
-            <Header options={[{label:'All Stories', command: () => history.push('/stories')}]} />
-            <p>{JSON.stringify(saveObject.adventure_text)}</p>
-            <p>{JSON.stringify(saveObject.current_room)}</p>
+            <Header options={[{ label: 'All Stories', command: () => history.push('/stories') }]} />
+
+            {/* <p>{JSON.stringify(saveObject.adventure_text)}</p>
+            <p>{JSON.stringify(saveObject.current_room)}</p> */}
             <div className='row'>
-                <div className="adventure-text">
-                    {saveObject.adventure_text.map((element, i) => {
-                        if (element.creator === 'comp') {
-                            return <p key={i}>{element.content}</p>
-                        }
-                        return <p key={i} className='user'>{element.content}</p>
-                    })}
-                </div>
-                <div className="inventory"></div>
+                <Panel header='Story Title' style={{ margin: '10px' }}>
+                    <div className="adventure-text">
+                        {saveObject.adventure_text.map((element, i) => {
+                            if (element.creator === 'comp') {
+                                return <p key={i}>{element.content}</p>
+                            }
+                            return <p key={i} className='user'>{element.content}</p>
+                        })}
+                    </div>
+                </Panel>
+                
+                <Panel header='Inventory' style={{margin: '10px'}}><div className="inventory"></div></Panel>
             </div>
             <div className="inputs">
                 <button className='n' onClick={(e) => { handleClick(e, moveUp) }}>Go North</button>
