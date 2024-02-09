@@ -102,7 +102,7 @@ export const Stories = () => {
     if (stories[0]) {
         return (
             <div>
-                <Header />
+                <Header options={[]}/>
                 <table>
                     <thead>
                         <tr>
