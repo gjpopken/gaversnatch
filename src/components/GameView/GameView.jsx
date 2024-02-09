@@ -18,11 +18,13 @@ export const GameView = () => {
     const history = useHistory()
     const dispatch = useDispatch()
     const [command, setCommand] = useState(null)
+    const dummy = useRef()
 
     useEffect(() => {
         // console.log(storyId);
         dispatch({ type: "GET_SAVEOBJ", payload: storyId })
-    }, [dispatch])
+        dummy.current.scrollIntoView({ behavior: "smooth" });
+    }, [])
 
 
     const save = doSave(saveObject)
@@ -44,11 +46,14 @@ export const GameView = () => {
             }
             dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: storyId } })
             setCommand(null)
+            setTimeout(() => {
+                dummy.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }); // Scroll to the bottom after updating
+            }, 500);
         }
     }
 
     const options = [
-        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'e' }
+        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'w' }
     ]
 
     return (
@@ -64,6 +69,7 @@ export const GameView = () => {
                             }
                             return <p key={i} className='user'>{element.content}</p>
                         })}
+                        <div ref={dummy}></div>
                     </div>
                 </Panel>
 
