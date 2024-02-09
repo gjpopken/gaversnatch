@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
+import { Menubar } from 'primereact/menubar';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -18,7 +19,7 @@ export const Header = ({ options }) => {
         {
             label: 'Menu',
             items: [...options,
-                {label: 'Create Story', command: () => {setVisible(true)}},
+            { label: 'Create Story', command: () => { setVisible(true) } },
             {
                 label: 'Logout',
                 command: () => dispatch({ type: "LOGOUT" })
@@ -39,10 +40,6 @@ export const Header = ({ options }) => {
             }).catch(err => {
                 console.log(err);
             })
-    }
-
-    const handleCommand = () => {
-        console.log('hi there again');
     }
 
     const postNewStory = (storyId) => {
@@ -91,11 +88,28 @@ export const Header = ({ options }) => {
         );
     }
 
+    const menuBtn = () => {
+        return (
+            <>
+                <Toast ref={toast}></Toast>
+                <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
+                <Button label="Menu" className="mr-2" onClick={(event) => menuLeft.current.toggle(event)} aria-controls="popup_menu_left" aria-haspopup />
+            </>
+        )
+    }
+
+    const gaversnatch = (<h1 style={{ marginRight: "200px" }}>GAVERSNATCH</h1>)
+
     return (
         <div className="card flex justify-content-center">
-            <Toast ref={toast}></Toast>
-            <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
-            <Button label="Menu" className="mr-2" onClick={(event) => menuLeft.current.toggle(event)} aria-controls="popup_menu_left" aria-haspopup />
+            <h1 className="text-3xl font-bold underline">
+                Hello world!
+            </h1>
+
+            <div className="card">
+                <Menubar end={menuBtn} start={gaversnatch} />
+            </div>
+
             {/* <Button label="Create New Game" onClick={() => setVisible(true)} /> */}
             <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                 <p className="m-0">

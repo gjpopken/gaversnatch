@@ -54,7 +54,6 @@ export const GameView = () => {
 
     return (
         <div className='container'>
-            <h2>GAVERSNATCH</h2>
             <Header options={[{label:'All Stories', command: () => history.push('/stories')}]} />
             <p>{JSON.stringify(saveObject.adventure_text)}</p>
             <p>{JSON.stringify(saveObject.current_room)}</p>
