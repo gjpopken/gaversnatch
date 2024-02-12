@@ -27,13 +27,13 @@ export const DeleteModal = ({ id, getStories }) => {
     )
 
     return (
-        <td>
+        <div>
             <button onClick={() => setDelVisible(true)}>Delete</button>
             <Dialog header="Are you sure you want to delete this story?" footer={delFooter} visible={delVisible} style={{ width: '50vw' }} onHide={() => setDelVisible(false)}>
                 <p className="m-0">
                     Deleting a story cannot be undone.
                 </p>
             </Dialog>
-        </td>
+        </div>
     )
 }

@@ -7,6 +7,7 @@ import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Menubar } from 'primereact/menubar';
+import { InputText } from 'primereact/inputtext';
 
 export const Header = ({ options }) => {
     const [visible, setVisible] = useState(false)
@@ -86,7 +87,7 @@ export const Header = ({ options }) => {
         }
         return (
             <div>
-                <Button label="Start Game!" onClick={() => handleSubmit()} className="p-button-text" />
+                <Button label="Start Game!" onClick={() => handleSubmit()} outlined />
                 <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
             </div>
         );
@@ -106,8 +107,8 @@ export const Header = ({ options }) => {
             {/* <Button label="Create New Game" onClick={() => setVisible(true)} /> */}
             <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                 <p className="m-0">
-                    <label htmlFor="nameInput">Enter New Story Name</label>
-                    <input
+                    <label htmlFor="nameInput">Enter New Story Name: </label>
+                    <InputText
                         type="text"
                         id="nameInput"
                         placeholder="Enter New Story Name"

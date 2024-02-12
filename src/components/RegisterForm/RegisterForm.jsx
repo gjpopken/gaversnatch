@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Card } from 'primereact/card';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -20,41 +24,42 @@ function RegisterForm() {
   }; // end registerUser
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register User</h2>
-      {errors.registrationMessage && (
-        <h3 className="alert" role="alert">
-          {errors.registrationMessage}
-        </h3>
-      )}
-      <div>
+    <Card>
+      <form className="formPanel" onSubmit={registerUser} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <h2 style={{ textAlign: 'center', minWidth: '300px' }}>Register User</h2>
+        {errors.registrationMessage && (
+          <h3 className="alert" role="alert">
+            {errors.registrationMessage}
+          </h3>
+        )}
+
         <label htmlFor="username">
           Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
         </label>
-      </div>
-      <div>
+        <InputText
+          type="text"
+          name="username"
+          value={username}
+          id='username'
+          required
+          onChange={(event) => setUsername(event.target.value)}
+        />
         <label htmlFor="password">
           Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
         </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
-      </div>
-    </form>
+        <InputText
+          type="password"
+          name="password"
+          id='password'
+          value={password}
+          required
+          onChange={(event) => setPassword(event.target.value)}
+        />
+
+        <Button type="submit" name="submit" label="Register" style={{ marginTop: '15px' }} />
+
+      </form>
+    </Card>
   );
 }
 
