@@ -22,7 +22,8 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import { GameView } from '../GameView/GameView';
 import { Stories } from '../Stories/Stories';
 
-import './App.css';
+// import './App.css';
+import 'primereact/resources/themes/viva-dark/theme.css'
 
 function App() {
   const dispatch = useDispatch();
@@ -116,14 +117,14 @@ function App() {
             exact
             path="/home"
           >
-            {user.id ?
+            {/* {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
               <Redirect to="/user" />
               :
-              // Otherwise, show the Landing page
+              // Otherwise, show the Landing page */}
               <LandingPage />
-            }
+            {/* } */}
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

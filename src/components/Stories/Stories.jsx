@@ -4,7 +4,9 @@ import { useEffect, useState } from "react"
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import { RadioButton } from "primereact/radiobutton";
+import { InputText } from "primereact/inputtext";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { DeleteModal } from "../DeleteModal/DeleteModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -92,55 +94,46 @@ export const Stories = () => {
         }
         return (
             <div>
-                <Button label="Start Game!" onClick={() => handleSubmit()} className="p-button-text" />
+                <Button label="Start Game!" onClick={() => handleSubmit()} outlined />
                 <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
             </div>
         );
+    }
+
+    const deleteButtonTemplate = (element) => {
+        return <DeleteModal id={element.id} getStories={getStories} />
+    }
+
+    const storyNameTemplate = (element) => {
+        return (<div>
+            <input type="radio" id={`story_name${element.id}`} value={element.id} onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id}></input>
+            <label htmlFor={`story_name${element.id}`} className="ml-2">{element.story_name}</label>
+        </div>
+        )
     }
 
     // console.log(stories[0]);
     if (stories[0]) {
         return (
             <div>
-                <Header options={[]}/>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Story Name</td>
-                            <td>Date Created</td>
-                            <td>Delete?</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {stories.map(element => {
-                            return (
-                                <tr key={element.id}>
-                                    {/* <td>{element.story_name}</td> */}
-                                    <td>
-                                        <div className="flex align-items-center">
-                                            {/* <RadioButton inputId={`story_name${element.id}`} value={element.id} name='stories' onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id} /> */}
-                                            <input type="radio" id={`story_name${element.id}`} value={element.id}  onChange={(e) => { console.log('new id', e.target.value); setLoadStoryId(e.target.value) }} checked={loadStoryId == element.id}></input>
-                                            <label htmlFor={`story_name${element.id}`} className="ml-2">{element.story_name}</label>
-                                        </div>
+                <Header options={[]} />
 
-                                    </td>
-                                    <td></td>
-                                    {/* //! The title of this component is a misnomer, this the delete button WITH attached modal nested in a <td></td> */}
-                                    <DeleteModal id={element.id} getStories={getStories} />
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-
-                </table>
-                <div>
+                <div className="card" style={{ margin: '25px' }}>
+                    <DataTable value={stories} tableStyle={{ minWidth: '50rem' }}>
+                        <Column body={storyNameTemplate} header="Story Name"></Column>
+                        <Column body={deleteButtonTemplate} header="Delete?"></Column>
+                        {/* <Column field="category" header="Category"></Column>
+                            <Column field="quantity" header="Quantity"></Column> */}
+                    </DataTable>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '25px' }}>
                     <Button label="Load Story" onClick={handleLoadStory} />
                     {/* <button>New Game</button> */}
                     <Button label="Create New Game" onClick={() => setVisible(true)} />
                     <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                         <p className="m-0">
-                            <label htmlFor="nameInput">Enter New Story Name</label>
-                            <input
+                            <label htmlFor="nameInput">Enter New Story Name: </label>
+                            <InputText
                                 type="text"
                                 id="nameInput"
                                 placeholder="Enter New Story Name"
@@ -155,28 +148,18 @@ export const Stories = () => {
     }
     return (
         <div>
-            <Header options={[]}/>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Story Name</td>
-                        <td>Date Created</td>
-                        <td>Delete?</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Click 'New Game' to Begin!</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                <button disabled >Load Game</button>
+            <Header options={[]} />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <p>Click 'New Game' to Begin!</p>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '25px' }}>
+
+                <Button disabled >Load Game</Button>
                 <Button label="Create New Game" onClick={() => setVisible(true)} />
                 <Dialog header="Start a New Game" footer={footerContent} visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
                     <p className="m-0">
-                        <label htmlFor="nameInput">Enter New Story Name</label>
-                        <input
+                        <label htmlFor="nameInput">Enter New Story Name: </label>
+                        <InputText
                             type="text"
                             id="nameInput"
                             placeholder="Enter New Story Name"
