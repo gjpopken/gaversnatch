@@ -13,9 +13,9 @@ function RegisterPage() {
       <h2>Welcome to the World of</h2>
       <h1>GAVERSNATCH</h1>
       <div className="grid">
-        <div>
+        <div  style={{position: 'relative'}}>
           <Button
-            onClick={() => history.push('/home')}
+            onClick={() => history.push('/login')}
             style={{ position: 'absolute', left: '-75px' }}>
             <span className='pi pi-arrow-left'></span>
           </Button>

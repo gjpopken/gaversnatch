@@ -7,6 +7,7 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from "primereact/inputtext";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Card } from "primereact/card";
 import { DeleteModal } from "../DeleteModal/DeleteModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -118,14 +119,14 @@ export const Stories = () => {
             <div>
                 <Header options={[]} />
 
-                <div className="card" style={{ margin: '25px' }}>
+                <Card className="card" style={{ margin: '25px' }}>
                     <DataTable value={stories} tableStyle={{ minWidth: '50rem' }}>
                         <Column body={storyNameTemplate} header="Story Name"></Column>
                         <Column body={deleteButtonTemplate} header="Delete?"></Column>
                         {/* <Column field="category" header="Category"></Column>
                             <Column field="quantity" header="Quantity"></Column> */}
                     </DataTable>
-                </div>
+                </Card>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '25px' }}>
                     <Button label="Load Story" onClick={handleLoadStory} />
                     {/* <button>New Game</button> */}

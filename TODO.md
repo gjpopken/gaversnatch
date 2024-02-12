@@ -14,4 +14,4 @@ What would be the next right thing to do?
 - Research some prompt engineering with Google Gemini to get some unique rooms. 
     - Have the AI write the JSON object that is being sent to the server. 
 - Aim to have the player move around into unique rooms. 
-- Get the styling feeling better. 
+- [x] Get the styling feeling better. 
