@@ -24,6 +24,7 @@ import { Stories } from '../Stories/Stories';
 
 // import './App.css';
 import 'primereact/resources/themes/viva-dark/theme.css'
+import 'primeicons/primeicons.css';
 
 function App() {
   const dispatch = useDispatch();
