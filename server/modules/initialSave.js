@@ -30,7 +30,7 @@ const initialSaveData = async (roomTemplate) => {
             adventure_text: [
                 { creator: 'comp', content: newRooms['0.0'].description }
             ],
-            current_room: ['0,0'],
+            current_room: ['0.0'],
             rooms_state: newRooms
         }
     } else {
