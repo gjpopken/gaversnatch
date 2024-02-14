@@ -8,10 +8,12 @@ import { Dialog } from 'primereact/dialog';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export const Header = ({ options }) => {
     const [visible, setVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const history = useHistory()
     const menuLeft = useRef(null);
@@ -31,14 +33,12 @@ export const Header = ({ options }) => {
 
     const handleSubmit = () => {
         console.log('in handle submit');
-        setVisible(false)
         axios.post('/api/stories', { story_name: nameInput })
             .then(response => {
                 console.log('POSTed!', response.data.id);
                 // getStories()
-                postNewStory(response.data.id, nameInput)
-                setNameInput('')
-                
+                setIsLoading(true)
+                postNewStory(response.data.id, nameInput)  
             }).catch(err => {
                 console.log(err);
             })
@@ -53,6 +53,9 @@ export const Header = ({ options }) => {
         axios.get('/api/initial').then(response => {
              axios.post(`/api/advtext/${storyId}`, {...response.data, story_name: name}
         ).then(response => {
+            setVisible(false)
+            setNameInput('')
+            setIsLoading(false)
             history.push(`/play/${storyId}`)
         }).catch(err => {
             console.log(err);
@@ -72,8 +75,8 @@ export const Header = ({ options }) => {
         }
         return (
             <div>
-                <Button label="Start Game!" onClick={() => handleSubmit()} outlined />
-                <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
+                {isLoading ? <Button disabled ><ProgressSpinner style={{width: '25px', height: '25px'}} /></Button> : <Button label="Start Game!" onClick={() => handleSubmit()} outlined />}
+                {isLoading ? <Button label="Cancel" disabled /> : <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />}
             </div>
         );
     }
