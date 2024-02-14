@@ -61,7 +61,7 @@ export const GameView = () => {
         <div className='container'>
             <Header options={[{ label: 'All Stories', command: () => history.push('/stories') }]} />
             <div className='row'>
-                <Panel header='Story Title' style={{ margin: '10px' }}>
+                <Panel header={saveObject.story_name ? saveObject.story_name : 'Story Title'} style={{ margin: '10px' }}>
                     <div className="adventure-text">
                         {saveObject.adventure_text.map((element, i, a) => {
                             if (element.creator === 'comp') {
