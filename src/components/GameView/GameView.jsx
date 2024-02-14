@@ -35,15 +35,16 @@ export const GameView = () => {
             let move;
 
             switch (option.dir) {
-                case 'n': move = moveUp()
+                case 'n': move = moveUp('Go North')
                     break
-                case 's': move = moveDown()
+                case 's': move = moveDown('Go South')
                     break
-                case 'e': move = moveRight()
+                case 'e': move = moveRight('Go East')
                     break
-                case 'w': move = moveLeft()
+                case 'w': move = moveLeft('Go West')
                     break
             }
+            console.log('MOVE:', move);
             dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveForMove(move), storyId: storyId } })
             setCommand(null)
             setTimeout(() => {

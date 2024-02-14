@@ -50,11 +50,7 @@ export const Stories = () => {
             }).catch(error => {
                 console.log(error);
             })
-
-
     }
-
-
 
     const getStories = () => {
         axios.get('/api/stories')

@@ -27,3 +27,8 @@
 .inputs button {
     position: absolute;
 }
+
+.user {
+    text-align: right;
+    color: paleturquoise;
+  }
