@@ -55,7 +55,9 @@ export const configMove = (confObj) => {
 
     const moveUp = () => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
+        console.log(coords);
         let attemptedCoords = coords.toSpliced(1, 1, +coords[1] - 1).join('.')
+        console.log(attemptedCoords);
         return handleAccess(attemptedCoords, coords.join('.'))
     }
 
