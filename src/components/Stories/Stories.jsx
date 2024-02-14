@@ -26,18 +26,18 @@ export const Stories = () => {
             .then(response => {
                 console.log('POSTed!', response.data.id);
                 // getStories()
+                postNewStory(response.data.id, nameInput)
                 setNameInput('')
-                postNewStory(response.data.id)
             }).catch(err => {
                 console.log(err);
             })
     }
 
-    const postNewStory = (storyId) => {
+    const postNewStory = (storyId, name) => {
         console.log('in post new story');
         axios.get('/api/initial')
             .then(response => {
-                axios.post(`/api/advtext/${storyId}`, response.data).then(response => {
+                axios.post(`/api/advtext/${storyId}`, {...response.data, story_name: name}).then(response => {
                     history.push(`/play/${storyId}`)
                 }).catch(err => {
                     console.log(err);

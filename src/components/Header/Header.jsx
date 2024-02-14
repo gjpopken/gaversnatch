@@ -23,7 +23,7 @@ export const Header = ({ options }) => {
             { label: 'Create Story', command: () => { setVisible(true) } },
             {
                 label: 'Logout',
-                command: () => dispatch({ type: "LOGOUT" })
+                command: () => {history.push('/stories');dispatch({ type: "LOGOUT" })}
             }
             ]
         }
@@ -36,8 +36,9 @@ export const Header = ({ options }) => {
             .then(response => {
                 console.log('POSTed!', response.data.id);
                 // getStories()
+                postNewStory(response.data.id, nameInput)
                 setNameInput('')
-                postNewStory(response.data.id)
+                
             }).catch(err => {
                 console.log(err);
             })
@@ -47,10 +48,10 @@ export const Header = ({ options }) => {
         console.log('hi there again');
     }
 
-    const postNewStory = (storyId) => {
+    const postNewStory = (storyId, name) => {
         console.log('in post new story');
         axios.get('/api/initial').then(response => {
-             axios.post(`/api/advtext/${storyId}`, response.data
+             axios.post(`/api/advtext/${storyId}`, {...response.data, story_name: name}
         ).then(response => {
             history.push(`/play/${storyId}`)
         }).catch(err => {
