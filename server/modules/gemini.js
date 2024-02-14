@@ -1,13 +1,13 @@
 require('dotenv').config()
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import 'dotenv/config'
 
 // Access your API key as an environment variable (see "Set up your API key" above)
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-async function run() {
+async function generateRoomDesc(theme, roomArray) {
     // For text-only input, use the gemini-pro model
     const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-    const theme = 'medeival castle'
-    const roomArray = ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6']
     const prompt = `
     Generate a description of each room in the array.
     
@@ -42,8 +42,11 @@ async function run() {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log(text);
-    console.table(JSON.parse(text))
+    // console.log(text);
+    // console.table(JSON.parse(text))
+    return text
   }
-  
-  run();
+//   generateRoomDesc('medeival castle', ['0.0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6']);
+  module.exports = {generateRoomDesc}
+
+  // I need the response data to merge into the starting data for a new game. 
