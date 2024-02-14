@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from "primereact/card";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { DeleteModal } from "../DeleteModal/DeleteModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -18,16 +19,16 @@ export const Stories = () => {
     const [visible, setVisible] = useState(false)
     const [nameInput, setNameInput] = useState('')
     const [loadStoryId, setLoadStoryId] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = () => {
         console.log('in handle submit');
-        setVisible(false)
         axios.post('/api/stories', { story_name: nameInput })
             .then(response => {
                 console.log('POSTed!', response.data.id);
                 // getStories()
+                setIsLoading(true)
                 postNewStory(response.data.id, nameInput)
-                setNameInput('')
             }).catch(err => {
                 console.log(err);
             })
@@ -37,7 +38,11 @@ export const Stories = () => {
         console.log('in post new story');
         axios.get('/api/initial')
             .then(response => {
-                axios.post(`/api/advtext/${storyId}`, {...response.data, story_name: name}).then(response => {
+                axios.post(`/api/advtext/${storyId}`, {...response.data, story_name: name})
+                .then(response => {
+                    setVisible(false)
+                    setNameInput('')
+                    setIsLoading(false)
                     history.push(`/play/${storyId}`)
                 }).catch(err => {
                     console.log(err);
@@ -76,15 +81,15 @@ export const Stories = () => {
         if (nameInput === '') {
             return (
                 <div>
-                    <Button disabled label="Start Game!" className="p-button-text" />
-                    <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
+                    {isLoading ? <Button disabled ><ProgressSpinner style={{width: '25px', height: '25px'}} /></Button> : <Button disabled label="Start Game!" className="p-button-text" />}
+                    {isLoading ? <Button label="Cancel" disabled /> : <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />}
                 </div>
             );
         }
         return (
             <div>
-                <Button label="Start Game!" onClick={() => handleSubmit()} outlined />
-                <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />
+                {isLoading ? <Button disabled ><ProgressSpinner style={{width: '25px', height: '25px'}} /></Button> : <Button label="Start Game!" onClick={() => handleSubmit()} outlined />}
+                {isLoading ? <Button label="Cancel" disabled /> : <Button label="Cancel" onClick={() => { setVisible(false); setNameInput('') }} autoFocus />}
             </div>
         );
     }
