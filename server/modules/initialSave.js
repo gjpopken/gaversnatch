@@ -1,14 +1,5 @@
 const ai = require('./gemini')
 
-const roomTemplate = {
-    '0.0': { isOpen: 1 },
-    '0.1': { isOpen: 1 },
-    '0.2': { isOpen: 1 },
-    '-1.2': { isOpen: 1 },
-    '1.2': { isOpen: 1 },
-    '3.0': { isOpen: 1 },
-}
-
 const initialSaveData = async (roomTemplate) => {
     const roomArray = Object.getOwnPropertyNames(roomTemplate)
     console.log(roomArray);
@@ -48,4 +39,6 @@ const initialSaveData = async (roomTemplate) => {
 
 }
 
-console.log(initialSaveData(roomTemplate))
+module.exports = initialSaveData
+
+// console.log(initialSaveData(roomTemplate))
