@@ -1,9 +1,11 @@
 const ai = require('./gemini')
+const randomTheme = require('./randomTheme')
 
 const initialSaveData = async (roomTemplate) => {
+    // console.log(randomTheme);
     const roomArray = Object.getOwnPropertyNames(roomTemplate)
     console.log(roomArray);
-    let response = await ai.generateRoomDesc('Space ship', roomArray)
+    let response = await ai.generateRoomDesc(randomTheme, roomArray)
     console.log(response);
     let triedResponse;
     try {
@@ -13,7 +15,7 @@ const initialSaveData = async (roomTemplate) => {
         console.log('it didn"t work');
         while (triedResponse == undefined) {
             try {
-                response = await ai.generateRoomDesc('Space ship', roomArray)
+                response = await ai.generateRoomDesc(randomTheme, roomArray)
                 triedResponse = JSON.parse(response)
             } catch (error) {
                 console.log('it didnt work');

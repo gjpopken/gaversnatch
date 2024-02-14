@@ -8,7 +8,7 @@ What would be the next right thing to do?
 
 Things that should be done by Friday:
 - [x] Story's name in the Game View
-- [] Random theme for GEMINI prompt
+- [x] Random theme for GEMINI prompt
 - [] Loading when GEMINI is generating descriptions.
 - [] User's actions appear in the log.
 
