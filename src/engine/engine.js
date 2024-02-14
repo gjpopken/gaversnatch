@@ -26,51 +26,59 @@ export const configMove = (confObj) => {
         return false
     }
 
-    const handleAccess = (attemptedCoords, prevCoords) => {
+    const handleAccess = (attemptedCoords, prevCoords, userCommand) => {
+        // console.log(`In handleAccess: 
+        // attempedCoords: ${attemptedCoords},
+        // prevCoords: ${prevCoords},
+        // userCommand: ${userCommand}
+        // `);
         if (checkValidRoom(attemptedCoords)) {
             if (checkIfOpen(attemptedCoords)) {
                 return {
                     history: [...confObj.history, attemptedCoords],
                     room: confObj.rooms[attemptedCoords],
+                    userCommand,
                 }
             }
             return {
                 history: [...confObj.history, prevCoords],
-                room: { description: 'This room is locked.' }
+                room: { description: 'This room is locked.' },
+                userCommand,
             }
         }
         else {
             return {
                 history: [...confObj.history, prevCoords],
-                room: { description: 'You have hit a wall.' }
+                room: { description: 'You have hit a wall.' },
+                userCommand,
             }
         }
     }
 
-    const moveDown = () => {
+    const moveDown = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(1, 1, +coords[1] + 1).join('.')
-        return handleAccess(attemptedCoords, coords.join('.'))
+        return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
-    const moveUp = () => {
+    const moveUp = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         console.log(coords);
         let attemptedCoords = coords.toSpliced(1, 1, +coords[1] - 1).join('.')
         console.log(attemptedCoords);
-        return handleAccess(attemptedCoords, coords.join('.'))
+        return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
-    const moveLeft = () => {
+    const moveLeft = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(0, 1, +coords[0] - 1).join('.')
-        return handleAccess(attemptedCoords, coords.join('.'))
+        return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
-    const moveRight = () => {
+    const moveRight = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(0, 1, +coords[0] + 1).join('.')
-        return handleAccess(attemptedCoords, coords.join('.'))
+        return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
     return { moveDown, moveUp, moveLeft, moveRight }
 }

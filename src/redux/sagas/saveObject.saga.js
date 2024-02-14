@@ -2,6 +2,7 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* updateSave(action) {
+  console.log("MOVESAVEOBJ: ", action.payload.move);
   try {
     yield axios.put(`api/advtext/${action.payload.storyId}`, action.payload.move)
     yield put({type: "GET_SAVEOBJ", payload: action.payload.storyId})
