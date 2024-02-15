@@ -10,8 +10,12 @@ function RegisterPage() {
 
   return (
     <div className='container'>
-      <h2>Welcome to the World of</h2>
-      <h1>GAVERSNATCH</h1>
+      {/* <h2>Welcome to the World of</h2>
+      <h1>GAVERSNATCH</h1> */}
+       <div className="gaversnatch">
+        <img src="public/Gaversnatchlogo.png" alt=""
+        style={{maxWidth: '1500px'}} />
+      </div>
       <div className="grid">
         <div  style={{position: 'relative'}}>
           <Button
