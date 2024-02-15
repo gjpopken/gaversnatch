@@ -5,6 +5,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { bandersnatch } from '../../engine/bandersnatch';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,6 +28,7 @@ import 'primereact/resources/themes/viva-dark/theme.css'
 import 'primeicons/primeicons.css';
 
 function App() {
+  bandersnatch()
   const dispatch = useDispatch();
 
   const user = useSelector(store => store.user);

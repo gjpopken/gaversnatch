@@ -10,7 +10,7 @@ Things that should be done by Friday:
 - [x] Story's name in the Game View
 - [x] Random theme for GEMINI prompt
 - [x] Loading when GEMINI is generating descriptions.
-- [] User's actions appear in the log.
+- [x] User's actions appear in the log.
 
 
 Things that would be nice:
