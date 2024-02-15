@@ -2,7 +2,8 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 function* fetchItems(action) {
-    const results = yield axios.get('/api/items')
+    const response = yield axios.get('/api/items')
+    yield put({type: "SET_ITEMS", payload: response.data})
 }
 
 function* fetchItemsSaga() {
