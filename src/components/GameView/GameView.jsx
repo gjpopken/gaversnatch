@@ -14,6 +14,7 @@ import { doSave } from '../../engine/doSave.js'
 
 export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
+    const items = useSelector(store => store.items)
     const { storyId } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -42,7 +43,10 @@ export const GameView = () => {
                 rooms = { ...saveObject.rooms_state, [currentRoom]: { ...saveObject.rooms_state[currentRoom], items: undefined } }
                 console.log('New room state:', rooms);
                 // 
-                resultText = 'You picked up a ____'
+                resultText = `You picked up ${saveObject.rooms_state[currentRoom].items.map((itemNo) => {
+                    return items[itemNo - 1].item_name
+                }).join(', ')}.`
+
                 dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveRoomState(rooms, userCommand, resultText), storyId: storyId }})
                 setCommand(null)
                 setTimeout(() => {

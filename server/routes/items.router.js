@@ -1,5 +1,6 @@
 const express = require('express');
 const pool = require('../modules/pool');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const router = express.Router();
 
 /**
@@ -20,5 +21,34 @@ SELECT * FROM "items";
         })
 });
 
+router.post('/inventory/:storyId', rejectUnauthenticated, async (req, res) => {
+    const connection = await pool.connect()
+    try {
+        connection.query("BEGIN")
+        let queryText = `
+    SELECT "user".id FROM "user"
+    JOIN story ON story.user_id = "user".id
+    WHERE story.id = $1;
+    `
+        const result = await connection.query(queryText, [req.params.storyId])
+        if (result.rows[0].id === req.user.id) {
+            queryText = `
+            INSERT INTO inventory ("story_id", "item_id", "quantity")
+            VALUES ($1, $2, $3);
+            `
+            await connection.query(queryText, [req.params.storyId, req.body.item_id, 1])
+            await connection.query("COMMIT")
+            res.sendStatus(201)
+        } else {
+            res.sendStatus(403)
+        }
+    } catch (error) {
+        await connection.query("ROLLBACK")
+        console.log(error);
+        res.sendStatus(500)
+    } finally {
+        connection.release()
+    }
+})
 
 module.exports = router;
