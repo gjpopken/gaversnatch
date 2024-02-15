@@ -21,6 +21,38 @@ SELECT * FROM "items";
         })
 });
 
+router.get('/inventory/:storyId', async (req, res) => {
+    const connection = await pool.connect()
+    try {
+        connection.query("BEGIN")
+        let queryText = `
+    SELECT "user".id FROM "user"
+    JOIN story ON story.user_id = "user".id
+    WHERE story.id = $1;
+    `
+        const result = await connection.query(queryText, [req.params.storyId])
+        if (result.rows[0].id === req.user.id) {
+            queryText = `
+            SELECT item_id, quantity, item_name, description FROM inventory
+            JOIN items ON inventory.item_id = items.id
+            WHERE story_id = $1;
+            `
+
+            const result2 = await connection.query(queryText, [req.params.storyId])
+            await connection.query("COMMIT")
+            res.send(result2.rows)
+        } else {
+            res.sendStatus(403)
+        }
+    } catch (error) {
+        await connection.query("ROLLBACK")
+        console.log(error);
+        res.sendStatus(500)
+    } finally {
+        connection.release()
+    }
+})
+
 router.post('/inventory/:storyId', rejectUnauthenticated, async (req, res) => {
     // expecting req.body to be an array of item_ids. 
 
