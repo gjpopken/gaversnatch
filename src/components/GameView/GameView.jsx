@@ -31,7 +31,28 @@ export const GameView = () => {
     const { moveDown, moveLeft, moveRight, moveUp } = configMove({ rooms: saveObject.rooms_state, history: saveObject.current_room })
 
     const handleClick = (option) => {
-        if (option) {
+        if (option?.name === 'Search Room') {
+            const currentRoom = saveObject.current_room[saveObject.current_room.length - 1]
+            let rooms, userCommand = 'Searched Room', resultText
+            console.log('Searching the room.');
+            console.log('current room: ', currentRoom);
+            if (Object.hasOwn(saveObject.rooms_state[currentRoom], 'items')) {
+                console.log('room has items');
+                // Rooms is an object of all the rooms with the updated state of the current room.
+                rooms = { ...saveObject.rooms_state, [currentRoom]: { ...saveObject.rooms_state[currentRoom], items: undefined } }
+                console.log('New room state:', rooms);
+                // 
+                resultText = 'You picked up a ____'
+                dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveRoomState(rooms, userCommand, resultText), storyId: storyId }})
+                setCommand(null)
+                setTimeout(() => {
+                    dummy.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }); // Scroll to the bottom after updating
+                }, 500);
+            } else {
+                console.log('room doesnt have items');
+            }
+        }
+        else if (option) {
             let move;
 
             switch (option.dir) {
@@ -54,7 +75,7 @@ export const GameView = () => {
     }
 
     const options = [
-        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'w' }
+        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'w' }, { name: 'Search Room' }
     ]
 
     return (
