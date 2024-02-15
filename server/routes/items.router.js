@@ -22,6 +22,8 @@ SELECT * FROM "items";
 });
 
 router.post('/inventory/:storyId', rejectUnauthenticated, async (req, res) => {
+    // expecting req.body to be an array of item_ids. 
+
     const connection = await pool.connect()
     try {
         connection.query("BEGIN")
@@ -36,7 +38,9 @@ router.post('/inventory/:storyId', rejectUnauthenticated, async (req, res) => {
             INSERT INTO inventory ("story_id", "item_id", "quantity")
             VALUES ($1, $2, $3);
             `
-            await connection.query(queryText, [req.params.storyId, req.body.item_id, 1])
+            for (let item_id of req.body) {
+                await connection.query(queryText, [req.params.storyId, item_id, 1])
+            }
             await connection.query("COMMIT")
             res.sendStatus(201)
         } else {
