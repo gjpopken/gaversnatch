@@ -50,6 +50,12 @@ export const GameView = () => {
                 }, 500);
             } else {
                 console.log('room doesnt have items');
+                resultText = 'You didn\'t find anything.'
+                dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveAdventureText(resultText, userCommand), storyId: storyId }})
+                setCommand(null)
+                setTimeout(() => {
+                    dummy.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }); // Scroll to the bottom after updating
+                }, 500);
             }
         }
         else if (option) {
