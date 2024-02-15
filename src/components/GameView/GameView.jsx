@@ -46,7 +46,7 @@ export const GameView = () => {
                 resultText = `You picked up ${saveObject.rooms_state[currentRoom].items.map((itemNo) => {
                     return items[itemNo - 1].item_name
                 }).join(', ')}.`
-
+                dispatch({type: "ADD_TO_INVENTORY", payload: {items: saveObject.rooms_state[currentRoom].items, storyId:storyId}})
                 dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveRoomState(rooms, userCommand, resultText), storyId: storyId }})
                 setCommand(null)
                 setTimeout(() => {
