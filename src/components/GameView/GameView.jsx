@@ -74,7 +74,11 @@ export const GameView = () => {
                     </div>
                 </Panel>
 
-                <Panel header='Inventory' style={{ margin: '10px' }}><div className="inventory"></div></Panel>
+                <Panel header='Inventory' style={{ margin: '10px' }}>
+                    <div className="inventory">
+
+                    </div>
+                </Panel>
             </div>
             <div className="inputs">
                 <Dropdown

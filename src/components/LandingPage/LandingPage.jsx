@@ -18,7 +18,7 @@ function LandingPage() {
       {/* <h2>Welcome to the World of</h2>
       <h1>GAVERSNATCH</h1> */}
       <div className="gaversnatch">
-        <img src="public/Gaversnatchlogo.png" alt=""
+        <img src="/Gaversnatchlogo.png" alt=""
         style={{maxWidth: '1500px'}} />
       </div>
       <Button onClick={onLogin} label='Begin'

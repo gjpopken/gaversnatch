@@ -2,7 +2,7 @@ const ai = require('./gemini')
 const randomTheme = require('./randomTheme')
 
 const initialSaveData = async (roomTemplate) => {
-    // console.log(randomTheme);
+    console.log(randomTheme);
     const roomArray = Object.getOwnPropertyNames(roomTemplate)
     console.log(roomArray);
     let response = await ai.generateRoomDesc(randomTheme, roomArray)
