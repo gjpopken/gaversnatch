@@ -28,11 +28,13 @@ How do I want the items system to work?
 - [x] Rooms have an array of item_ids. 
 - [x] Search room command.
 - [x] If you pick up something, it is POSTed to the inventory table, 
-- [] and rendered to DOM
+- [x] and rendered to DOM
 - [x] Room's state is altered
-- [] delete route fixed for people who have items.
+- [x] delete route fixed for people who have items.
 
 
+
+SOMEDAY
 - Player can use items
     - Player selects command to use specific item. 
         - 'The locked door is now unlocked.'
