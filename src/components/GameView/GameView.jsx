@@ -45,9 +45,14 @@ export const GameView = () => {
                 rooms = { ...saveObject.rooms_state, [currentRoom]: { ...saveObject.rooms_state[currentRoom], items: undefined } }
                 console.log('New room state:', rooms);
                 // 
-                resultText = `You picked up ${saveObject.rooms_state[currentRoom].items.map((itemNo) => {
+                if (saveObject.rooms_state[currentRoom].items[0] === 111) {
+                    console.log('you win!');
+                    resultText = 'You pick up a small tablet with a rune on it, and it dissolves in your palm. You sense in your body that as soon as you wish it, you could leave this place. You feel a sense of satisfaction for solving the puzzle. Will you continue to explore?'
+                } else {
+                     resultText = `You picked up ${saveObject.rooms_state[currentRoom].items.map((itemNo) => {
                     return items[itemNo - 1].item_name
                 }).join(', ')}.`
+                }
                 dispatch({type: "ADD_TO_INVENTORY", payload: {items: saveObject.rooms_state[currentRoom].items, storyId:storyId}})
                 dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveRoomState(rooms, userCommand, resultText), storyId: storyId }})
                 setCommand(null)

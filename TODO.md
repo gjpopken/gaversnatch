@@ -32,6 +32,13 @@ How do I want the items system to work?
 - [x] Room's state is altered
 - [x] delete route fixed for people who have items.
 
+For Presentation: 
+- [] Change favicon
+- [] 
+
+Should there be a win state for the demo?
+If so, is there an easy way to implement that? Like adding a new table? (maybe not so easy.) Or If you search a room and find a particular item, you win?
+
 
 
 SOMEDAY
