@@ -15,6 +15,7 @@ import { doSave } from '../../engine/doSave.js'
 export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
     const items = useSelector(store => store.items)
+    const inventory = useSelector(store => store.inventory)
     const { storyId } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -24,6 +25,7 @@ export const GameView = () => {
     useEffect(() => {
         // console.log(storyId);
         dispatch({ type: "GET_SAVEOBJ", payload: storyId })
+        dispatch({type: "FETCH_INVENTORY", payload: storyId})
         dummy.current.scrollIntoView({ behavior: "smooth" });
     }, [])
 
@@ -107,7 +109,11 @@ export const GameView = () => {
 
                 <Panel header='Inventory' style={{ margin: '10px' }}>
                     <div className="inventory">
-
+                        {inventory.map((element, i) => {
+                            return (
+                                <p key={i}>{element.item_name}</p>
+                            )
+                        })}
                     </div>
                 </Panel>
             </div>

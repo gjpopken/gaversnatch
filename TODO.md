@@ -25,10 +25,12 @@ How do I want the items system to work?
 
     Maybe there's a command to search the room. If there's something to be grabbed, they grab it. (Later, bad things could happen, too.)
 
-- [] Rooms have an array of item_ids. 
-- [] Search room command.
-- [] If you pick up something, it is POSTed to the inventory table, and rendered to DOM
-- [] Room's state is altered
+- [x] Rooms have an array of item_ids. 
+- [x] Search room command.
+- [x] If you pick up something, it is POSTed to the inventory table, 
+- [] and rendered to DOM
+- [x] Room's state is altered
+- [] delete route fixed for people who have items.
 
 
 - Player can use items

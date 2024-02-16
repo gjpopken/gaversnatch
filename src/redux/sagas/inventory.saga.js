@@ -11,7 +11,8 @@ function* addToInventory(action) {
 }
 
 function* fetchInventory(action) {
-    
+    const response = yield axios.get(`/api/items/inventory/${action.payload}`)
+    yield put({type: "SET_INVENTORY", payload: response.data})
 }
 
 
