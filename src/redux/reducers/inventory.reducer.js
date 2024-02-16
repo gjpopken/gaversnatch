@@ -1,5 +1,5 @@
-const inventory = (state = [], action => {
+const inventory = (state = [], action) => {
     return state
-})
+}
 
 export default inventory
