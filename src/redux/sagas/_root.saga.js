@@ -3,6 +3,8 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import saveObjSaga from './saveObject.saga';
+import fetchItemsSaga from './items.saga';
+import addInventorySaga from './inventory.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -17,5 +19,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     saveObjSaga(),
+    fetchItemsSaga(),
+    addInventorySaga(),
   ]);
 }

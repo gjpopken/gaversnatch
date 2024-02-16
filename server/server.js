@@ -12,6 +12,7 @@ const userRouter = require('./routes/user.router');
 const advtextRouter = require('./routes/advtext.router')
 const storiesRouter = require('./routes/stories.router')
 const initialSaveRouter = require('./routes/initialSave.router')
+const itemsRouter = require('./routes/items.router')
 
 // Express Middleware
 app.use(express.json());
@@ -30,6 +31,7 @@ app.use('/api/user', userRouter);
 app.use('/api/advtext', advtextRouter)
 app.use('/api/stories', storiesRouter)
 app.use('/api/initial', initialSaveRouter)
+app.use('/api/items', itemsRouter)
 
 // Listen Server & Port
 app.listen(PORT, () => {

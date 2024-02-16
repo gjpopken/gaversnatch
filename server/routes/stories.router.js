@@ -59,6 +59,11 @@ router.delete('/:storyId', rejectUnauthenticated, async (req, res) => {
             `
             await connection.query(queryText, [req.params.storyId])
             queryText = `
+            DELETE FROM "inventory"
+            WHERE story_id = $1;
+            `
+            await connection.query(queryText, [req.params.storyId])
+            queryText = `
             DELETE FROM story 
             WHERE id = $1;
             `

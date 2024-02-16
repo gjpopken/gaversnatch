@@ -15,4 +15,30 @@ Things that should be done by Friday:
 
 Things that would be nice:
 - [] Feels more like a game - player can use items
-- [] Improved UI with Images
+- [x] Improved UI with Images
+
+
+How do I want the items system to work?
+- The user can pick up items, which adds them to inventory. 
+    - Room has items in it. How does the user select the item without typing?
+    - Room object has to update when item is gone. 
+
+    Maybe there's a command to search the room. If there's something to be grabbed, they grab it. (Later, bad things could happen, too.)
+
+- [x] Rooms have an array of item_ids. 
+- [x] Search room command.
+- [x] If you pick up something, it is POSTed to the inventory table, 
+- [x] and rendered to DOM
+- [x] Room's state is altered
+- [x] delete route fixed for people who have items.
+
+
+
+SOMEDAY
+- Player can use items
+    - Player selects command to use specific item. 
+        - 'The locked door is now unlocked.'
+
+- [] Use items render in commands.
+- [] Using a key next to a room with a locked door unlocks it. 
+- [] Using other objects returns that it doesn't do anything. 

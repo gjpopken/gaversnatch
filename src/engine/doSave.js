@@ -27,14 +27,14 @@ const saveObject = {
 
 // Calling any of these functions will return an updated save object that can be stored globally or in the database. 
 export const doSave = (saveObject) => {
-    const saveRoomState = (rooms) => {
-        return { ...saveObject, rooms_state: rooms }
+    const saveRoomState = (rooms, userCommand, resultText) => {
+        return { ...saveObject, rooms_state: rooms, adventure_text: [...saveObject.adventure_text, {creator: 'user', content: userCommand}, {creator: 'comp', content: resultText}] }
     }
     const saveCurrentRoom = (history) => {
         return { ...saveObject, current_room: history }
     }
-    const saveAdventureText = (adventure_text) => {
-        return { ...saveObject, adventure_text: adventure_text }
+    const saveAdventureText = (adventure_text, userCommand) => {
+        return { ...saveObject, adventure_text: [...saveObject.adventure_text, {creator: 'user', content: userCommand}, {creator: 'comp', content: adventure_text}] }
     }
     const saveForMove = (moveObj) => {
         return {...saveObject, adventure_text: [...saveObject.adventure_text, {creator: 'user', content: moveObj.userCommand}, {creator: 'comp', content: moveObj.room.description}], current_room: moveObj.history}

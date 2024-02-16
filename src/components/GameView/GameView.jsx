@@ -14,6 +14,8 @@ import { doSave } from '../../engine/doSave.js'
 
 export const GameView = () => {
     const saveObject = useSelector(store => store.saveObject)
+    const items = useSelector(store => store.items)
+    const inventory = useSelector(store => store.inventory)
     const { storyId } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -23,6 +25,7 @@ export const GameView = () => {
     useEffect(() => {
         // console.log(storyId);
         dispatch({ type: "GET_SAVEOBJ", payload: storyId })
+        dispatch({type: "FETCH_INVENTORY", payload: storyId})
         dummy.current.scrollIntoView({ behavior: "smooth" });
     }, [])
 
@@ -31,7 +34,37 @@ export const GameView = () => {
     const { moveDown, moveLeft, moveRight, moveUp } = configMove({ rooms: saveObject.rooms_state, history: saveObject.current_room })
 
     const handleClick = (option) => {
-        if (option) {
+        if (option?.name === 'Search Room') {
+            const currentRoom = saveObject.current_room[saveObject.current_room.length - 1]
+            let rooms, userCommand = 'Searched Room', resultText
+            console.log('Searching the room.');
+            console.log('current room: ', currentRoom);
+            if (Object.hasOwn(saveObject.rooms_state[currentRoom], 'items')) {
+                console.log('room has items');
+                // Rooms is an object of all the rooms with the updated state of the current room.
+                rooms = { ...saveObject.rooms_state, [currentRoom]: { ...saveObject.rooms_state[currentRoom], items: undefined } }
+                console.log('New room state:', rooms);
+                // 
+                resultText = `You picked up ${saveObject.rooms_state[currentRoom].items.map((itemNo) => {
+                    return items[itemNo - 1].item_name
+                }).join(', ')}.`
+                dispatch({type: "ADD_TO_INVENTORY", payload: {items: saveObject.rooms_state[currentRoom].items, storyId:storyId}})
+                dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveRoomState(rooms, userCommand, resultText), storyId: storyId }})
+                setCommand(null)
+                setTimeout(() => {
+                    dummy.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }); // Scroll to the bottom after updating
+                }, 500);
+            } else {
+                console.log('room doesnt have items');
+                resultText = 'You didn\'t find anything.'
+                dispatch({ type: "UPDATE_SAVE", payload: { move: save.saveAdventureText(resultText, userCommand), storyId: storyId }})
+                setCommand(null)
+                setTimeout(() => {
+                    dummy.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" }); // Scroll to the bottom after updating
+                }, 500);
+            }
+        }
+        else if (option) {
             let move;
 
             switch (option.dir) {
@@ -54,7 +87,7 @@ export const GameView = () => {
     }
 
     const options = [
-        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'w' }
+        { name: 'Go North', dir: 'n' }, { name: 'Go South', dir: 's' }, { name: "Go East", dir: 'e' }, { name: "Go West", dir: 'w' }, { name: 'Search Room' }
     ]
 
     return (
@@ -74,7 +107,15 @@ export const GameView = () => {
                     </div>
                 </Panel>
 
-                <Panel header='Inventory' style={{ margin: '10px' }}><div className="inventory"></div></Panel>
+                <Panel header='Inventory' style={{ margin: '10px' }}>
+                    <div className="inventory">
+                        {inventory.map((element, i) => {
+                            return (
+                                <p key={i}>{element.item_name}</p>
+                            )
+                        })}
+                    </div>
+                </Panel>
             </div>
             <div className="inputs">
                 <Dropdown
