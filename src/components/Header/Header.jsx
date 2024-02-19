@@ -85,7 +85,7 @@ export const Header = ({ options }) => {
         <Menu model={items} popup ref={menuLeft} id="popup_menu_left" />
         <Button label="Menu" className="mr-2" onClick={(event) => menuLeft.current.toggle(event)} aria-controls="popup_menu_left" aria-haspopup /></>)
 
-    const gaversnatch = (<div><h1>GAVERSNATCH: How Will You Escape?</h1></div> )
+    const gaversnatch = (<div><h1>GAVERSNATCH</h1></div> )
 
     return (
         <div className="card flex justify-content-between" style={{width: '100%'}}>
