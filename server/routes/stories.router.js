@@ -4,7 +4,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route -- retrieves all stories and their ID's from the story table for logged in user.
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
     const queryText = `
