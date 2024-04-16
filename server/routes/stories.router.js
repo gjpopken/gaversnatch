@@ -22,7 +22,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * POST route template
+ * POST route -- creates new story in the stories table with its title and associated user.
  */
 router.post('/', (req, res) => {
     const queryText = `
@@ -40,6 +40,10 @@ router.post('/', (req, res) => {
         })
 });
 
+
+/**
+ * DELETE route -- first deletes save data, and finally the story title from stories table.
+ */
 router.delete('/:storyId', rejectUnauthenticated, async (req, res) => {
     const connection = await pool.connect()
     try {
