@@ -4,7 +4,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route -- gets all items from the items table (these items are predetermined)
  */
 router.get('/', (req, res) => {
     // console.log('in the get router for items');
@@ -21,6 +21,10 @@ SELECT * FROM "items";
         })
 });
 
+
+/**
+ * GET route -- gets a player's current inventory from the inventory junction table.
+ */
 router.get('/inventory/:storyId', async (req, res) => {
     const connection = await pool.connect()
     try {
