@@ -57,6 +57,10 @@ router.get('/inventory/:storyId', async (req, res) => {
     }
 })
 
+
+/**
+ * POST route -- inserts new items a user has picked up into the inventory junction table
+ */
 router.post('/inventory/:storyId', rejectUnauthenticated, async (req, res) => {
     // expecting req.body to be an array of item_ids. 
 
