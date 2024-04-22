@@ -4,7 +4,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route -- sends the save data from the database for a particular user's current story.
  */
 router.get('/:storyId', rejectUnauthenticated, (req, res) => {
     // GET route code here
@@ -42,7 +42,7 @@ router.get('/:storyId', rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * POST route template
+ * POST route -- adds the base save data for a new story, which is specified in the req.body (want to refactor to be a separate module)
  */
 router.post('/:storyId', (req, res) => {
     let queryText = `
@@ -74,6 +74,10 @@ router.post('/:storyId', (req, res) => {
         })
 });
 
+
+/**
+ * PUT route -- updates the save data to the new data object.
+ */
 router.put('/:storyId', rejectUnauthenticated, (req, res) => {
     // console.log(req.user);
     let queryText = `
@@ -89,7 +93,6 @@ router.put('/:storyId', rejectUnauthenticated, (req, res) => {
                 UPDATE "baseMode_adventures" SET "history" = $1
             WHERE story_id = $2;
                 `
-                // console.log(queryText);
                 pool.query(queryText, [JSON.stringify(req.body), req.params.storyId])
                     .then(result => {
                         res.sendStatus(201)
@@ -100,7 +103,6 @@ router.put('/:storyId', rejectUnauthenticated, (req, res) => {
             } else {
                 res.sendStatus(403)
             }
-            // res.send(result.rows)
         }).catch(err => {
             console.log(err);
             res.sendStatus(500)
