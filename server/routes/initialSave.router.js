@@ -5,18 +5,11 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 /**
- * GET route template
+ * GET route -- gets the object for the initial safe from a separate module.
  */
 router.get('/', async (req, res) => {
     const result = await getInitialSave(roomTemplate)
     res.send(result)
-});
-
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
-  // POST route code here
 });
 
 module.exports = router;

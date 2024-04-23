@@ -42,7 +42,7 @@ router.get('/:storyId', rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * POST route -- adds the base save data for a new story, which is specified in the req.body (want to refactor to be a separate module)
+ * POST route -- adds the base save data for a new story, which is specified in the req.body
  */
 router.post('/:storyId', (req, res) => {
     let queryText = `
