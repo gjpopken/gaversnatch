@@ -1,3 +1,7 @@
+/**
+ * An object that defines the map, which doors are open, and what items a room contains.
+ */
+
 module.exports = roomTemplate = {
     '0.0': { isOpen: 1, items: [6] },
     '0.1': { isOpen: 1 },
