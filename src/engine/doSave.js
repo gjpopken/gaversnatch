@@ -1,6 +1,6 @@
 // ! --- THIS IS THE FORMAT FOR ALL THE SAVE DATA ---
 
-const saveObject = {
+const _saveObject = {
     // ! This is for rerendering past actions to the DOM.
     adventure_text: [
         { creator: 'user' | 'comp', content: 'Move left' },

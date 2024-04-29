@@ -11,7 +11,17 @@ const confOjb = {
 
 // ! --- --- --- ---
 
+/**
+ * 
+ * @param {Object} confObj a config object like the one above.
+ * @returns the four cardinal move functions.
+ */
 export const configMove = (confObj) => {
+    /**
+     * A function to check if a room coordinate is an existing room coordinate in the config objs list of rooms.
+     * @param {String} coord formatted x.y
+     * @returns true if the room exists, else false.
+     */
     const checkValidRoom = (coord) => {
         if (Object.hasOwn(confObj.rooms, coord)) {
             return true
