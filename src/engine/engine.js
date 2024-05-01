@@ -19,7 +19,7 @@ const confOjb = {
 export const configMove = (confObj) => {
     /**
      * A function to check if a room coordinate is an existing room coordinate in the config objs list of rooms.
-     * @param {String} coord formatted x.y
+     * @param {'x.y'} coord formatted x.y
      * @returns true if the room exists, else false.
      */
     const checkValidRoom = (coord) => {
@@ -29,6 +29,12 @@ export const configMove = (confObj) => {
         return false
     }
 
+
+    /**
+     * A function to check if a coordinate that exists in the config obj's 'rooms' isOpen.
+     * @param {'x.y'} coord formmated x.y, a coordinate that exists in the config obj's 'rooms'
+     * @returns true if the room isOpen, else false.
+     */
     const checkIfOpen = (coord) => {
         if (confObj.rooms[coord].isOpen) {
             return true
@@ -36,6 +42,15 @@ export const configMove = (confObj) => {
         return false
     }
 
+
+    /**
+     * A function to return information for the save object and DOM when a player attempts to make a move.
+     * Essentially checks if the move is valid, and returns the appropriate response. 
+     * @param {'x.y'} attemptedCoords 
+     * @param {'x.y'} prevCoords 
+     * @param {String} userCommand 
+     * @returns an object with a coordinate history, room object with the outcome of the move, and the user's command
+     */
     const handleAccess = (attemptedCoords, prevCoords, userCommand) => {
         // console.log(`In handleAccess: 
         // attempedCoords: ${attemptedCoords},
