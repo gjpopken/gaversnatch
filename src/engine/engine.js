@@ -80,12 +80,22 @@ export const configMove = (confObj) => {
         }
     }
 
+   /**
+    * A function that formats and inputs the coordinates in the config object.
+    * @param {String} userCommand A string for the benefit of what is shown on the DOM, e.g. 'Moved South'
+    * @returns calls handleAccess() and returns the object that function returns. 
+    */
     const moveDown = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(1, 1, +coords[1] + 1).join('.')
         return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
+      /**
+    * A function that formats and inputs the coordinates in the config object.
+    * @param {String} userCommand A string for the benefit of what is shown on the DOM, e.g. 'Moved South'
+    * @returns calls handleAccess() and returns the object that function returns. 
+    */
     const moveUp = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         console.log(coords);
@@ -94,12 +104,22 @@ export const configMove = (confObj) => {
         return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
+      /**
+    * A function that formats and inputs the coordinates in the config object.
+    * @param {String} userCommand A string for the benefit of what is shown on the DOM, e.g. 'Moved South'
+    * @returns calls handleAccess() and returns the object that function returns. 
+    */
     const moveLeft = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(0, 1, +coords[0] - 1).join('.')
         return handleAccess(attemptedCoords, coords.join('.'), userCommand)
     }
 
+      /**
+    * A function that formats and inputs the coordinates in the config object.
+    * @param {String} userCommand A string for the benefit of what is shown on the DOM, e.g. 'Moved South'
+    * @returns calls handleAccess() and returns the object that function returns. 
+    */
     const moveRight = (userCommand) => {
         const coords = confObj.history[confObj.history.length - 1].split('.')
         let attemptedCoords = coords.toSpliced(0, 1, +coords[0] + 1).join('.')
