@@ -12,7 +12,7 @@ const confOjb = {
 // ! --- --- --- ---
 
 /**
- * 
+ * A function that sets up to allow a user to navigate between coordinate rooms.
  * @param {Object} confObj a config object like the one above.
  * @returns the four cardinal move functions.
  */
